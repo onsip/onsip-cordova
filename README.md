@@ -37,8 +37,6 @@ Example:
       var SIP = cordova.require("com.onsip.cordova.Sip.js");
       var PhoneRTCMediaHandler = cordova.require("com.onsip.cordova.SipjsMediaHandler")(SIP);
       
-      window.addEventListener("orientationchange", cordova.plugins.phonertc.updateVideoPosition);
-      
       window.ua = new SIP.UA({
         mediaHandlerFactory: PhoneRTCMediaHandler
       });
