@@ -82,12 +82,12 @@ Authors
 ### Eric Green
 
 * <eric.green@onsip.com>
-* /egreenmachine on [GitHub](http://github.com/egreenmachine)
+* [@egreenmachine](http://github.com/egreenmachine)
 
 ### Joseph Frazier
 
 * <joseph@onsip.com>
-* /joseph-onsip on [GitHub](http://github.com/joseph-onsip)
+* [@joseph-onsip](http://github.com/joseph-onsip)
 
 
 License
