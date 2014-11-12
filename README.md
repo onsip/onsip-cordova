@@ -3,6 +3,10 @@ OnSIP-Cordova
 
 A Cordova plugin that uses [SIP.js](http://sipjs.com/) with the [PhoneRTC plugin](https://github.com/alongubkin/phonertc) to make WebRTC calls over the internet.
 
+SIPjs.com Guide:
+-
+[http://sipjs.com/guides/mobile/cordova/](http://sipjs.com/guides/mobile/cordova/)
+
 Installation
 -
 
