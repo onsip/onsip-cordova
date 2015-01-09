@@ -20,7 +20,7 @@ Project Setup:
 cordova create <name>
 cd <name>
 cordova platform add ios
-cordova plugin add 
+cordova plugin add https://github.com/onsip/onsip-cordova.git
 cordova run
 ~~~
 
@@ -33,7 +33,7 @@ Example:
   <body>
     <video id="localVideo"></video>
     <video id="remoteVideo"></video>
-    <input id="target" type=text">
+    <input id="target" type="text">
     <button id="makeCall">Make Call</button>
   </body>
   <script>
@@ -45,7 +45,7 @@ Example:
         mediaHandlerFactory: PhoneRTCMediaHandler
       });
       
-      document.getElementById("makeCall").addEventListener("click, function() {
+      document.getElementById("makeCall").addEventListener("click", function() {
         if (window.session) {
           alert("Only one call at a time.");
         }
