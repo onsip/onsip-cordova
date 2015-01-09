@@ -38,7 +38,7 @@ Example:
   </body>
   <script>
     document.addEventListener("deviceready", function() {
-      var SIP = cordova.require("com.onsip.cordova.Sip.js");
+      var SIP = cordova.require("com.onsip.cordova.Sipjs");
       var PhoneRTCMediaHandler = cordova.require("com.onsip.cordova.SipjsMediaHandler")(SIP);
       
       window.ua = new SIP.UA({
