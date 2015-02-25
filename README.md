@@ -37,43 +37,52 @@ Example:
     <input id="target" type="text">
     <button id="makeCall">Make Call</button>
   </body>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
   <script>
     document.addEventListener("deviceready", function() {
       var SIP = cordova.require("com.onsip.cordova.Sipjs");
       var PhoneRTCMediaHandler = cordova.require("com.onsip.cordova.SipjsMediaHandler")(SIP);
-      
-      window.ua = new SIP.UA({
-        mediaHandlerFactory: PhoneRTCMediaHandler
-      });
-      
-      document.getElementById("makeCall").addEventListener("click", function() {
-        if (window.session) {
-          alert("Only one call at a time.");
-        }
-        var options = {
-          media : {
-            constraints: {
-              audio: true,
-              video: true
+      var mediaOptions = {
+        media : {
+          constraints: {
+            audio: true,
+            video: true
+          },
+          render: {
+            local: {
+              video: document.getElementById('localVideo')
             },
-            render: {
-              local: {
-                video: document.getElementById('localVideo')
-              },
-              remote: {
-                video: document.getElementById('remoteVideo')
-              }
+            remote: {
+              video: document.getElementById('remoteVideo')
             }
           }
         }
-        
-        if (session) {
-          session.accept(options);
-          window.session = session;
-        } else {
-          window.session = window.ua.invite(document.getElementById('target').value, options);
+      };
+
+      window.ua = new SIP.UA({
+        mediaHandlerFactory: PhoneRTCMediaHandler,
+        traceSip: true
+      });
+
+      document.getElementById("makeCall").addEventListener("click", function() {
+        if (window.session) {
+          alert("Only one call at a time.");
+          return;
         }
-        session.on('terminated', function () {window.session = null;});
+        window.session = window.ua.invite(document.getElementById('target').value, mediaOptions);
+        window.session.on('terminated', function () {window.session = null;});
+      });
+      window.ua.on('invite', function(_session) {
+        if (window.session) {
+          alert("Only one call at a time.");
+          _session.reject();
+          return;
+        }
+        window.session = _session;
+        window.session.accept(mediaOptions);
+        window.session.on('terminated', function () {window.session = null;});
+        
       });
     });
     app.initialize();
