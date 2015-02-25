@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -42,6 +42,8 @@
 @property(nonatomic, readonly) NSInteger yPitch;
 @property(nonatomic, readonly) NSInteger uPitch;
 @property(nonatomic, readonly) NSInteger vPitch;
+
+- (BOOL)makeExclusive;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 // Disallow init and don't add to documentation

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -37,9 +37,6 @@
 // RTCPeerConnectionDelegate is a protocol for an object that must be
 // implemented to get messages from PeerConnection.
 @protocol RTCPeerConnectionDelegate<NSObject>
-
-// Triggered when there is an error.
-- (void)peerConnectionOnError:(RTCPeerConnection *)peerConnection;
 
 // Triggered when the SignalingState changed.
 - (void)peerConnection:(RTCPeerConnection *)peerConnection

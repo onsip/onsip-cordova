@@ -67,19 +67,18 @@
 		<header-file src="src/ios/RTCVideoRenderer.h" />
 		<header-file src="src/ios/RTCVideoSource.h" />
 		<header-file src="src/ios/RTCVideoTrack.h" />
-		<source-file src="libs/ios/libCNG.a" framework="true" />
+    <source-file src="libs/ios/libCNG.a" framework="true" />
 		<source-file src="libs/ios/libG711.a" framework="true" />
 		<source-file src="libs/ios/libG722.a" framework="true" />
 		<source-file src="libs/ios/libPCM16B.a" framework="true" />
-		<source-file src="libs/ios/lib_core_neon_offsets.a" framework="true" />
 		<source-file src="libs/ios/libaudio_coding_module.a" framework="true" />
 		<source-file src="libs/ios/libaudio_conference_mixer.a" framework="true" />
+		<source-file src="libs/ios/libaudio_decoder_interface.a" framework="tue" />
 		<source-file src="libs/ios/libaudio_device.a" framework="true" />
+		<source-file src="libs/ios/libaudio_encoder_interface.a" framework="true" />
 		<source-file src="libs/ios/libaudio_processing.a" framework="true" />
-		<source-file src="libs/ios/libaudio_processing_neon.a" framework="true" />
 		<source-file src="libs/ios/libbitrate_controller.a" framework="true" />
 		<source-file src="libs/ios/libcommon_audio.a" framework="true" />
-		<source-file src="libs/ios/libcommon_audio_neon.a" framework="true" />
 		<source-file src="libs/ios/libcommon_video.a" framework="true" />
 		<source-file src="libs/ios/libcrnspr.a" framework="true" />
 		<source-file src="libs/ios/libcrnss.a" framework="true" />
@@ -90,25 +89,29 @@
 		<source-file src="libs/ios/libiLBC.a" framework="true" />
 		<source-file src="libs/ios/libiSAC.a" framework="true" />
 		<source-file src="libs/ios/libiSACFix.a" framework="true" />
-		<source-file src="libs/ios/libicudata.a" framework="true" />
 		<source-file src="libs/ios/libicui18n.a" framework="true" />
 		<source-file src="libs/ios/libicuuc.a" framework="true" />
-		<source-file src="libs/ios/libisac_neon.a" framework="true" />
-		<source-file src="libs/ios/libjingle.a" framework="true" />
 		<source-file src="libs/ios/libjingle_media.a" framework="true" />
 		<source-file src="libs/ios/libjingle_p2p.a" framework="true" />
 		<source-file src="libs/ios/libjingle_peerconnection.a" framework="true" />
 		<source-file src="libs/ios/libjingle_peerconnection_objc.a" framework="true" />
-		<source-file src="libs/ios/libjingle_sound.a" framework="true" />
 		<source-file src="libs/ios/libjsoncpp.a" framework="true" />
 		<source-file src="libs/ios/libmedia_file.a" framework="true" />
+		<source-file src="libs/ios/libmetrics_default.a" framework="true" />
 		<source-file src="libs/ios/libneteq.a" framework="true" />
 		<source-file src="libs/ios/libnss_static.a" framework="true" />
 		<source-file src="libs/ios/libopus.a" framework="true" />
 		<source-file src="libs/ios/libpaced_sender.a" framework="true" />
-		<source-file src="libs/ios/librbe_components.a" framework="true" />
+		<source-file src="libs/ios/libred.a" framework="true" />
 		<source-file src="libs/ios/libremote_bitrate_estimator.a" framework="true" />
+		<source-file src="libs/ios/librtc_base_approved.a" framework="true" />
+		<source-file src="libs/ios/librtc_base.a" framework="true" />
+		<source-file src="libs/ios/librtc_p2p.a" framework="true" />
+		<source-file src="libs/ios/librtc_sound.a" framework="true" />
+		<source-file src="libs/ios/librtc_xmllite.a" framework="true" />
+		<source-file src="libs/ios/librtc_xmpp.a" framework="true" />
 		<source-file src="libs/ios/librtp_rtcp.a" framework="true" />
+		<source-file src="libs/ios/libsocketrocket.a" framework="true" />
 		<source-file src="libs/ios/libsqlite_regexp.a" framework="true" />
 		<source-file src="libs/ios/libsrtp.a" framework="true" />
 		<source-file src="libs/ios/libsystem_wrappers.a" framework="true" />
@@ -120,16 +123,14 @@
 		<source-file src="libs/ios/libvideo_render_module.a" framework="true" />
 		<source-file src="libs/ios/libvoice_engine.a" framework="true" />
 		<source-file src="libs/ios/libvpx.a" framework="true" />
-		<source-file src="libs/ios/libvpx_asm_offsets_vp8.a" framework="true" />
-		<source-file src="libs/ios/libvpx_asm_offsets_vpx_scale.a" framework="true" />
 		<source-file src="libs/ios/libwebrtc.a" framework="true" />
-		<source-file src="libs/ios/libwebrtc_base.a" framework="true" />
 		<source-file src="libs/ios/libwebrtc_common.a" framework="true" />
 		<source-file src="libs/ios/libwebrtc_i420.a" framework="true" />
 		<source-file src="libs/ios/libwebrtc_opus.a" framework="true" />
 		<source-file src="libs/ios/libwebrtc_utility.a" framework="true" />
 		<source-file src="libs/ios/libwebrtc_video_coding.a" framework="true" />
 		<source-file src="libs/ios/libwebrtc_vp8.a" framework="true" />
+		<source-file src="libs/ios/libwebrtc_vp9.a" framework="true" />
 		<source-file src="libs/ios/libyuv.a" framework="true" />
 		<source-file src="libs/ios/libyuv_neon.a" framework="true" />
 		<header-file src="src/ios/PhoneRTCPlugin.h" />
