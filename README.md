@@ -21,6 +21,7 @@ cordova create <name>
 cd <name>
 cordova platform add ios
 cordova plugin add https://github.com/onsip/onsip-cordova.git
+cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
 
