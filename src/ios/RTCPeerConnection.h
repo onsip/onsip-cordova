@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013 Google Inc.
+ * Copyright 2013, Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -64,7 +64,8 @@
 // Add a new MediaStream to be sent on this PeerConnection.
 // Note that a SessionDescription negotiation is needed before the
 // remote peer can receive the stream.
-- (BOOL)addStream:(RTCMediaStream *)stream;
+- (BOOL)addStream:(RTCMediaStream *)stream
+      constraints:(RTCMediaConstraints *)constraints;
 
 // Remove a MediaStream from this PeerConnection.
 // Note that a SessionDescription negotiation is need before the

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2014 Google Inc.
+ * Copyright 2014, Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@
 
 #import <AppKit/NSOpenGLView.h>
 
-#import "RTCVideoRenderer.h"
+#import "RTCVideoTrack.h"
 
 @class RTCNSGLVideoView;
 @protocol RTCNSGLVideoViewDelegate
@@ -40,8 +40,9 @@
 
 @end
 
-@interface RTCNSGLVideoView : NSOpenGLView <RTCVideoRenderer>
+@interface RTCNSGLVideoView : NSOpenGLView
 
+@property(nonatomic, strong) RTCVideoTrack* videoTrack;
 @property(nonatomic, weak) id<RTCNSGLVideoViewDelegate> delegate;
 
 @end
