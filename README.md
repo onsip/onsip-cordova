@@ -7,6 +7,9 @@ SIPjs.com Guide:
 -
 [http://sipjs.com/guides/mobile/cordova/](http://sipjs.com/guides/mobile/cordova/)
 
+Installation
+-
+
 **Cordova Setup**
 ~~~
 npm install -g cordova ios-deploy
@@ -23,6 +26,9 @@ cordova run
 ~~~
 
 **You need to add 'libc++.dylib' to project Frameworks (General -> Linked Framewroks and Libraries)**
+
+Usage
+-
 
 **Example**
 ~~~
@@ -86,7 +92,8 @@ cordova run
 </html>
 ~~~
 
-**Authors**
+Authors
+-
 
 ### Eric Green
 
