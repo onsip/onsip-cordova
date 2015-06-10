@@ -20,7 +20,7 @@ Project Setup:
 cordova create <name>
 cd <name>
 cordova platform add ios
-cordova plugin add https://github.com/onsip/onsip-cordova.git
+cordova plugin add https://github.com/sergiog90/onsip-cordova.git
 cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
@@ -82,7 +82,7 @@ Example:
         window.session = _session;
         window.session.accept(mediaOptions);
         window.session.on('terminated', function () {window.session = null;});
-        
+
       });
     });
     app.initialize();
