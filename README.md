@@ -7,15 +7,12 @@ SIPjs.com Guide:
 -
 [http://sipjs.com/guides/mobile/cordova/](http://sipjs.com/guides/mobile/cordova/)
 
-Installation
--
-
-Cordova Setup:
+**Cordova Setup**
 ~~~
 npm install -g cordova ios-deploy
 ~~~
 
-Project Setup:
+**Project Setup**
 ~~~
 cordova create <name>
 cd <name>
@@ -25,10 +22,9 @@ cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
 
-Usage
--
+**You need to add libc++l.dylib to project Frameworks (General -> Linked Framewroks and Libraries)**
 
-Example:
+**Example**
 ~~~
 <html>
   <body>
@@ -90,8 +86,7 @@ Example:
 </html>
 ~~~
 
-Authors
--
+**Authors**
 
 ### Eric Green
 
@@ -104,8 +99,7 @@ Authors
 * [@joseph-onsip](http://github.com/joseph-onsip)
 
 
-License
--
+**License**
 
 OnSIP-Cordova is released under the [MIT license](https://github.com/onsip/onsip-cordova/license).
 
