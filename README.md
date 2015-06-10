@@ -22,7 +22,7 @@ cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
 
-**You need to add libc++l.dylib to project Frameworks (General -> Linked Framewroks and Libraries)**
+**You need to add 'libc++.dylib' to project Frameworks (General -> Linked Framewroks and Libraries)**
 
 **Example**
 ~~~
