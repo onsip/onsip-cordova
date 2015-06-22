@@ -15,8 +15,8 @@
     self = [super init];
     self.delegate = delegate;
     self.isInitiator = isInitiator;
-    // TODO: Remove this (might have unintended side effects)
-    self.doVideo = YES;
+    // TODO: Read from user settings or set option in interface or similar.
+    self.doVideo = NO;
 
     self.constraints = [[RTCMediaConstraints alloc]
                         initWithMandatoryConstraints:
