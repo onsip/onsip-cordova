@@ -72,7 +72,7 @@
     }
     [lms addAudioTrack:[self.peerConnectionFactory audioTrackWithID:@"ARDAMSa0"]];
 
-    [self.peerConnection addStream:lms constraints:[self constraints]];
+    [self.peerConnection addStream:lms];
 
     // End local capture
 
@@ -92,7 +92,7 @@ didCreateSessionDescription:(RTCSessionDescription *)origSdp
         NSAssert(NO, error.description);
         return;
     }
-    
+
     RTCSessionDescription* sdp =
     [[RTCSessionDescription alloc]
      initWithType:origSdp.type
@@ -238,7 +238,7 @@ didSetSessionDescriptionWithError:(NSError *)error {
     //          @"%@",
     //          [NSString stringWithFormat:@"Error: %@", error.description]);
     // NSAssert([objects count] > 0, @"Invalid JSON object");
-    
+
     NSString *value = [objects objectForKey:@"type"];
     if ([value compare:@"candidate"] == NSOrderedSame) {
         NSString *mid = [objects objectForKey:@"id"];
