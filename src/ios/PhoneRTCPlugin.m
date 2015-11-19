@@ -79,7 +79,7 @@
         remoteVideoView.userInteractionEnabled = NO;
         [self.webView.scrollView addSubview:remoteVideoView];
         if (remoteVideoTrack) {
-            remoteVideoView.videoTrack = remoteVideoTrack;
+            [remoteVideoTrack addRenderer:remoteVideoView];
             remoteVideoView.hidden = NO;
             [self.webView.scrollView bringSubviewToFront:remoteVideoView];
             [self.webView.scrollView bringSubviewToFront:localVideoView];
@@ -138,7 +138,7 @@
 
 - (void)addLocalVideoTrack:(RTCVideoTrack *)track {
     NSLog(@"addLocalStream 1");
-    localVideoView.videoTrack = track;
+    [track addRenderer:localVideoView];
     localVideoView.hidden = NO;
     [self.webView.scrollView bringSubviewToFront:localVideoView];
     [self.webView setNeedsDisplay];
@@ -147,7 +147,7 @@
 - (void)addRemoteVideoTrack:(RTCVideoTrack *)track {
     NSLog(@"addRemoteStream 1");
     if (remoteVideoView) {
-        remoteVideoView.videoTrack = track;
+        [track addRenderer:remoteVideoView];
         remoteVideoView.hidden = NO;
         [self.webView.scrollView bringSubviewToFront:remoteVideoView];
         [self.webView.scrollView bringSubviewToFront:localVideoView];
@@ -159,8 +159,6 @@
 
 - (void)resetUi {
     NSLog(@"Reset Ui");
-    self.localVideoView.videoTrack = nil;
-    self.remoteVideoView.videoTrack = nil;
     localVideoView.hidden = YES;
     [localVideoView performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
     remoteVideoView.hidden = YES;
