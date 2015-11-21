@@ -20,12 +20,13 @@ npm install -g cordova ios-deploy
 cordova create <name>
 cd <name>
 cordova platform add ios
-cordova plugin add https://github.com/sergiog90/onsip-cordova.git
+cordova plugin add https://github.com/Switch168/onsip-cordova
 cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
 
 **You need to add 'libc++.dylib' to project Frameworks (General -> Linked Framewroks and Libraries)**
+**You also need to set `self.doVideo = YES` in `PhoneRTCDelegate.m` manually for video to work
 
 Usage
 -
