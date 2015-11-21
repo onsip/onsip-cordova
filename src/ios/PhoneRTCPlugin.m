@@ -146,14 +146,13 @@
 
 - (void)addRemoteVideoTrack:(RTCVideoTrack *)track {
     NSLog(@"addRemoteStream 1");
+    remoteVideoTrack = track;
     if (remoteVideoView) {
         [track addRenderer:remoteVideoView];
         remoteVideoView.hidden = NO;
         [self.webView.scrollView bringSubviewToFront:remoteVideoView];
         [self.webView.scrollView bringSubviewToFront:localVideoView];
         [self.webView setNeedsDisplay];
-    } else {
-        remoteVideoTrack = track;
     }
 }
 

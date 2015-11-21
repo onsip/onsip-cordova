@@ -94,7 +94,7 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
           console.log('Call disconnected!');
         }
       };
-      if (mediaHint && mediaHint.constraints && mediaHint.constraints.video) {
+      if (mediaHint) {
         callOptions.video = {};
   
         if (mediaHint.render) {
