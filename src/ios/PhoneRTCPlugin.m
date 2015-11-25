@@ -71,14 +71,7 @@
     return view;
 }
 
-// update video views if HTML element has changed in size, pos
-- (void)setVideoViews: (CDVInvokedUrlCommand*)command {
-    NSError *error;
-    NSDictionary *arguments = [NSJSONSerialization
-                               JSONObjectWithData:[[command.arguments objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding]
-                               options:0
-                               error:&error];
-    
+- (void)setupVideoDisplay:(NSDictionary*)arguments {
     if ([arguments objectForKey:@"video"]) {
         NSDictionary *localVideo = [[arguments objectForKey:@"video"] objectForKey:@"localVideo"];
         NSDictionary *remoteVideo = [[arguments objectForKey:@"video"] objectForKey:@"remoteVideo"];
@@ -88,7 +81,7 @@
         }
         localVideoView = [self createVideoView:localVideo];
         [localVideoTrack addRenderer:localVideoView];
-
+        
         if (remoteVideoView) {
             [remoteVideoView removeFromSuperview];
         }
@@ -97,6 +90,17 @@
         
         [self.webView setNeedsDisplay];
     }
+}
+
+// update video views if HTML element has changed in size, pos
+- (void)setVideoViews: (CDVInvokedUrlCommand*)command {
+    NSError *error;
+    NSDictionary *arguments = [NSJSONSerialization
+                               JSONObjectWithData:[[command.arguments objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding]
+                               options:0
+                               error:&error];
+    
+    [self setupVideoDisplay:arguments];
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -112,13 +116,7 @@
                                options:0
                                error:&error];
 
-    if ([arguments objectForKey:@"video"]) {
-        NSDictionary *localVideo = [[arguments objectForKey:@"video"] objectForKey:@"localVideo"];
-        NSDictionary *remoteVideo = [[arguments objectForKey:@"video"] objectForKey:@"remoteVideo"];
-        
-        localVideoView = [self createVideoView:localVideo];
-        remoteVideoView = [self createVideoView:remoteVideo];
-    }
+    [self setupVideoDisplay:arguments];
 
     if (self.webRTC) {
         // callee
