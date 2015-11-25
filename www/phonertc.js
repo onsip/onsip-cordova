@@ -40,7 +40,7 @@ exports.setVideoViews = function (options) {
       null,
       null,
       'PhoneRTCPlugin',
-      'setVideoView',
+      'setVideoViews',
       [JSON.stringify(execOptions)]);
   }
 };
