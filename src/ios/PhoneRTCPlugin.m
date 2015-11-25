@@ -5,6 +5,7 @@
 
 @implementation PhoneRTCPlugin
 @synthesize localVideoView;
+@synthesize localVideoTrack;
 @synthesize remoteVideoView;
 @synthesize remoteVideoTrack;
 
@@ -56,6 +57,51 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.sendMessageCallbackId];
 }
 
+// {x:y:width:height:}
+- (RTCEAGLVideoView*) createVideoView:(NSDictionary*)videoLayoutParams {
+    
+    CGRect frame = CGRectMake([[videoLayoutParams objectForKey:@"x"] intValue], [[videoLayoutParams objectForKey:@"y"] intValue], [[videoLayoutParams objectForKey:@"width"] intValue], [[videoLayoutParams objectForKey:@"height"] intValue]);
+    
+    RTCEAGLVideoView *view = [[RTCEAGLVideoView alloc] initWithFrame:frame];
+    view.userInteractionEnabled = NO;
+    
+    [self.webView.scrollView addSubview:view];
+    [self.webView.scrollView bringSubviewToFront:view];
+    
+    return view;
+}
+
+// update video views if HTML element has changed in size, pos
+- (void)setVideoViews: (CDVInvokedUrlCommand*)command {
+    NSError *error;
+    NSDictionary *arguments = [NSJSONSerialization
+                               JSONObjectWithData:[[command.arguments objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding]
+                               options:0
+                               error:&error];
+    
+    if ([arguments objectForKey:@"video"]) {
+        NSDictionary *localVideo = [[arguments objectForKey:@"video"] objectForKey:@"localVideo"];
+        NSDictionary *remoteVideo = [[arguments objectForKey:@"video"] objectForKey:@"remoteVideo"];
+        
+        if (localVideoView) {
+            [localVideoView removeFromSuperview];
+        }
+        localVideoView = [self createVideoView:localVideo];
+        [localVideoTrack addRenderer:localVideoView];
+
+        if (remoteVideoView) {
+            [remoteVideoView removeFromSuperview];
+        }
+        remoteVideoView = [self createVideoView:remoteVideo];
+        [remoteVideoTrack addRenderer:remoteVideoView];
+        
+        [self.webView setNeedsDisplay];
+    }
+    
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.sendMessageCallbackId];
+}
+
 - (void)getDescription: (CDVInvokedUrlCommand*)command
 {
     self.sendMessageCallbackId = command.callbackId;
@@ -69,22 +115,9 @@
     if ([arguments objectForKey:@"video"]) {
         NSDictionary *localVideo = [[arguments objectForKey:@"video"] objectForKey:@"localVideo"];
         NSDictionary *remoteVideo = [[arguments objectForKey:@"video"] objectForKey:@"remoteVideo"];
-        localVideoView = [[RTCEAGLVideoView alloc] initWithFrame:CGRectMake([[localVideo objectForKey:@"x"] intValue], [[localVideo objectForKey:@"y"] intValue], [[localVideo objectForKey:@"width"] intValue], [[localVideo objectForKey:@"height"] intValue])];
-        localVideoView.hidden = YES;
-        localVideoView.userInteractionEnabled = NO;
-        [self.webView.scrollView addSubview:localVideoView];
-
-        remoteVideoView = [[RTCEAGLVideoView alloc] initWithFrame:CGRectMake([[remoteVideo objectForKey:@"x"] intValue], [[remoteVideo objectForKey:@"y"] intValue], [[remoteVideo objectForKey:@"width"] intValue], [[remoteVideo objectForKey:@"height"] intValue])];
-        remoteVideoView.hidden = YES;
-        remoteVideoView.userInteractionEnabled = NO;
-        [self.webView.scrollView addSubview:remoteVideoView];
-        if (remoteVideoTrack) {
-            [remoteVideoTrack addRenderer:remoteVideoView];
-            remoteVideoView.hidden = NO;
-            [self.webView.scrollView bringSubviewToFront:remoteVideoView];
-            [self.webView.scrollView bringSubviewToFront:localVideoView];
-            [self.webView setNeedsDisplay];
-        }
+        
+        localVideoView = [self createVideoView:localVideo];
+        remoteVideoView = [self createVideoView:remoteVideo];
     }
 
     if (self.webRTC) {
@@ -138,6 +171,7 @@
 
 - (void)addLocalVideoTrack:(RTCVideoTrack *)track {
     NSLog(@"addLocalStream 1");
+    localVideoTrack = track;
     [track addRenderer:localVideoView];
     localVideoView.hidden = NO;
     [self.webView.scrollView bringSubviewToFront:localVideoView];
@@ -163,6 +197,7 @@
     remoteVideoView.hidden = YES;
     [remoteVideoView performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
     localVideoView = nil;
+    localVideoTrack = nil;
     remoteVideoView = nil;
     remoteVideoTrack = nil;
     self.webRTC = nil;

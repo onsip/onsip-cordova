@@ -93,6 +93,27 @@ Usage
 </html>
 ~~~
 
+You may also want the video to auto-refresh its frame when you change to landscape from portrait. For example:
+```html
+$scope.updateVideoPosition = function () {
+  if (window.cordova.platformId === 'ios') {
+    $rootScope.$broadcast('videoView.updatePosition');
+  }
+}
+
+function updateVideoContainers() {
+  cordova.plugins.phonertc.setVideoViews(
+    {
+      video: {
+        localVideo: document.getElementById('localVideo'),
+        remoteVideo: document.getElementById('remoteVideo')
+      }
+    }
+  );
+}
+$rootScope.$on('videoView.updatePosition', updateVideoContainers);
+```
+
 Authors
 -
 
