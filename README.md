@@ -25,8 +25,9 @@ cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
 
-**You need to add 'libc++.dylib' to project Frameworks (General -> Linked Framewroks and Libraries)**
-**You also need to set `self.doVideo = YES` in `PhoneRTCDelegate.m` manually for video to work
+**You need to add `libc++.dylib` to project Frameworks (General -> Linked Framewroks and Libraries)**
+
+**You also need to set `self.doVideo = YES` in `PhoneRTCDelegate.m` manually for video to work**
 
 Usage
 -
@@ -53,11 +54,9 @@ Usage
             video: true
           },
           render: {
-            local: {
-              video: document.getElementById('localVideo')
-            },
-            remote: {
-              video: document.getElementById('remoteVideo')
+              // note SIPjs 0.7.0+ syntax
+              local: document.getElementById('localVideo'),
+              remote: document.getElementById('remoteVideo')
             }
           }
         }
