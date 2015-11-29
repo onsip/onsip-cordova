@@ -33,7 +33,7 @@ Usage
 -
 
 **Example**
-~~~
+```html
 <html>
   <body>
     <video id="localVideo"></video>
@@ -90,10 +90,10 @@ Usage
     app.initialize();
   </script>
 </html>
-~~~
+```
 
-You may also want the video to auto-refresh its frame when you change to landscape from portrait. For example:
-```html
+You may also want the video element to auto-refresh its video overlay when you change to landscape from portrait. For example:
+```javascript
 $scope.updateVideoPosition = function () {
   if (window.cordova.platformId === 'ios') {
     $rootScope.$broadcast('videoView.updatePosition');
@@ -129,7 +129,7 @@ Authors
 
 **License**
 
-OnSIP-Cordova is released under the [MIT license](https://github.com/onsip/onsip-cordova/license).
+OnSIP-Cordova is released under the [MIT license](https://github.com/onsip/onsip-cordova/LICENSE).
 
 OnSIP-Cordova contains SIP.js under the following license:
 
