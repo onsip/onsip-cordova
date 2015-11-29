@@ -76,17 +76,36 @@
         NSDictionary *localVideo = [[arguments objectForKey:@"video"] objectForKey:@"localVideo"];
         NSDictionary *remoteVideo = [[arguments objectForKey:@"video"] objectForKey:@"remoteVideo"];
         
+        if (remoteVideoView) {
+            [remoteVideoView removeFromSuperview];
+        }
+        remoteVideoView = [self createVideoView:remoteVideo];
+        [remoteVideoTrack addRenderer:remoteVideoView];
+        
         if (localVideoView) {
             [localVideoView removeFromSuperview];
         }
         localVideoView = [self createVideoView:localVideo];
         [localVideoTrack addRenderer:localVideoView];
         
+        [self.webView setNeedsDisplay];
+    }
+}
+
+- (void)refreshVideoContainer:(NSDictionary*)arguments {
+    if ([arguments objectForKey:@"video"]) {
+        NSDictionary *localVideo = [[arguments objectForKey:@"video"] objectForKey:@"localVideo"];
+        NSDictionary *remoteVideo = [[arguments objectForKey:@"video"] objectForKey:@"remoteVideo"];
+        
         if (remoteVideoView) {
-            [remoteVideoView removeFromSuperview];
+            CGRect frame = CGRectMake([[remoteVideo objectForKey:@"x"] intValue], [[remoteVideo objectForKey:@"y"] intValue], [[remoteVideo objectForKey:@"width"] intValue], [[remoteVideo objectForKey:@"height"] intValue]);
+            remoteVideoView.frame = frame;
         }
-        remoteVideoView = [self createVideoView:remoteVideo];
-        [remoteVideoTrack addRenderer:remoteVideoView];
+        
+        if (localVideo) {
+            CGRect frame = CGRectMake([[localVideo objectForKey:@"x"] intValue], [[localVideo objectForKey:@"y"] intValue], [[localVideo objectForKey:@"width"] intValue], [[localVideo objectForKey:@"height"] intValue]);
+            localVideoView.frame = frame;
+        }
         
         [self.webView setNeedsDisplay];
     }
@@ -100,7 +119,7 @@
                                options:0
                                error:&error];
     
-    [self setupVideoDisplay:arguments];
+    [self refreshVideoContainer:arguments];
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
