@@ -95,9 +95,9 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
         }
       };
       if (mediaHint) {
-        callOptions.video = {};
   
         if (mediaHint.render) {
+          callOptions.video = {};
           var localVideo = mediaHint.render.local;
           if (localVideo) {
             callOptions.video.localVideo = localVideo;

@@ -14,23 +14,7 @@
 {
     self = [super init];
     self.delegate = delegate;
-    self.isInitiator = isInitiator;
-    // TODO: Read from user settings or set option in interface or similar.
-    self.doVideo = NO;
-
-    self.constraints = [[RTCMediaConstraints alloc]
-                        initWithMandatoryConstraints:
-                        @[
-                          [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"],
-                          [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo" value:@"true"]
-                          ]
-                        optionalConstraints:
-                        @[
-                          [[RTCPair alloc] initWithKey:@"internalSctpDataChannels" value:@"true"],
-                          [[RTCPair alloc] initWithKey:@"DtlsSrtpKeyAgreement" value:@"true"]
-                          ]
-                        ];
-
+    self.isInitiator = isInitiator;  
     self.queuedRemoteCandidates = [NSMutableArray array];
     self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
     self.pcObserver = [[PCObserver alloc] initWithDelegate:self];
@@ -49,6 +33,7 @@
     RTCMediaStream *lms = [self.peerConnectionFactory mediaStreamWithLabel:@"ARDAMS"];
     if ([self doVideo]) {
         // Local capture copied from AppRTC
+        // Will not work in iPhone Simulator
         NSString* cameraID = nil;
         for (AVCaptureDevice* captureDevice in
              [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {

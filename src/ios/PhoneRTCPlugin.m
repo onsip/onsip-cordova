@@ -137,14 +137,30 @@
 
     [self setupVideoDisplay:arguments];
 
-    if (self.webRTC) {
-        // callee
-        [self.webRTC getDescription];
-    } else {
+    if (!self.webRTC) {
         // caller. create self.webrtc
         [self createPhoneRTCDelegate:arguments andIsInitiator:YES];
-        [self.webRTC getDescription];
     }
+    
+    // callee
+    self.webRTC.doVideo = [arguments objectForKey:@"video"] == nil ? NO : YES;
+    self.webRTC.constraints = [[RTCMediaConstraints alloc]
+                               initWithMandatoryConstraints:
+                               @[
+                                 [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"],
+                                 [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo" value:
+                                  self.webRTC.doVideo ? @"true" : @"false"]
+                                 ]
+                               optionalConstraints:
+                               @[
+                                 [[RTCPair alloc] initWithKey:@"internalSctpDataChannels" value:@"true"],
+                                 [[RTCPair alloc] initWithKey:@"DtlsSrtpKeyAgreement" value:@"true"]
+                                 ]
+                               ];
+    
+    [self.webRTC getDescription];
+    
+
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT];
     [pluginResult setKeepCallbackAsBool:true];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.sendMessageCallbackId];

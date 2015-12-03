@@ -47,8 +47,16 @@ Usage
     document.addEventListener("deviceready", function() {
       var SIP = cordova.require("com.onsip.cordova.Sipjs");
       var PhoneRTCMediaHandler = cordova.require("com.onsip.cordova.SipjsMediaHandler")(SIP);
+      var audioOnlyMediaOptions = {
+        media: {
+          constraints: {
+            audio: true,
+            video: false
+          }
+        }
+      };
       var mediaOptions = {
-        media : {
+        media: {
           constraints: {
             audio: true,
             video: true
@@ -129,7 +137,7 @@ Authors
 
 **License**
 
-OnSIP-Cordova is released under the [MIT license](https://github.com/onsip/onsip-cordova/LICENSE).
+OnSIP-Cordova is released under the [MIT license](https://github.com/onsip/onsip-cordova/blob/master/LICENSE).
 
 OnSIP-Cordova contains SIP.js under the following license:
 
