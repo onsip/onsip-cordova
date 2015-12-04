@@ -7,6 +7,8 @@ SIPjs.com Guide:
 -
 [http://sipjs.com/guides/mobile/cordova/](http://sipjs.com/guides/mobile/cordova/)
 
+Note: this version supports all architectures (x86, arm64, armv7).
+
 Installation
 -
 
@@ -25,9 +27,8 @@ cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
 
-**You need to add `libc++.dylib` to project Frameworks (General -> Linked Framewroks and Libraries)**
-
-**You also need to set `self.doVideo = YES` in `PhoneRTCDelegate.m` manually for video to work**
+**XCode Setup**
+Add `libc++.dylib` to project Frameworks (General -> Linked Frameworks and Libraries)
 
 Usage
 -
@@ -40,6 +41,7 @@ Usage
     <video id="remoteVideo"></video>
     <input id="target" type="text">
     <button id="makeCall">Make Call</button>
+    <button id="makeVideoCall">Make Video Call</button>
   </body>
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
@@ -76,6 +78,14 @@ Usage
       });
 
       document.getElementById("makeCall").addEventListener("click", function() {
+        if (window.session) {
+          alert("Only one call at a time.");
+          return;
+        }
+        window.session = window.ua.invite(document.getElementById('target').value, audioOnlyMediaOptions);
+        window.session.on('terminated', function () {window.session = null;});
+      });
+      document.getElementById("makeVideoCall").addEventListener("click", function() {
         if (window.session) {
           alert("Only one call at a time.");
           return;
