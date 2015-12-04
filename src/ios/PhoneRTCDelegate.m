@@ -14,23 +14,7 @@
 {
     self = [super init];
     self.delegate = delegate;
-    self.isInitiator = isInitiator;
-    // TODO: Remove this (might have unintended side effects)
-    self.doVideo = YES;
-
-    self.constraints = [[RTCMediaConstraints alloc]
-                        initWithMandatoryConstraints:
-                        @[
-                          [[RTCPair alloc] initWithKey:@"OfferToReceiveAudio" value:@"true"],
-                          [[RTCPair alloc] initWithKey:@"OfferToReceiveVideo" value:@"true"]
-                          ]
-                        optionalConstraints:
-                        @[
-                          [[RTCPair alloc] initWithKey:@"internalSctpDataChannels" value:@"true"],
-                          [[RTCPair alloc] initWithKey:@"DtlsSrtpKeyAgreement" value:@"true"]
-                          ]
-                        ];
-
+    self.isInitiator = isInitiator;  
     self.queuedRemoteCandidates = [NSMutableArray array];
     self.peerConnectionFactory = [[RTCPeerConnectionFactory alloc] init];
     self.pcObserver = [[PCObserver alloc] initWithDelegate:self];
@@ -49,6 +33,7 @@
     RTCMediaStream *lms = [self.peerConnectionFactory mediaStreamWithLabel:@"ARDAMS"];
     if ([self doVideo]) {
         // Local capture copied from AppRTC
+        // Will not work in iPhone Simulator
         NSString* cameraID = nil;
         for (AVCaptureDevice* captureDevice in
              [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
@@ -72,7 +57,7 @@
     }
     [lms addAudioTrack:[self.peerConnectionFactory audioTrackWithID:@"ARDAMSa0"]];
 
-    [self.peerConnection addStream:lms constraints:[self constraints]];
+    [self.peerConnection addStream:lms];
 
     // End local capture
 
@@ -92,7 +77,7 @@ didCreateSessionDescription:(RTCSessionDescription *)origSdp
         NSAssert(NO, error.description);
         return;
     }
-    
+
     RTCSessionDescription* sdp =
     [[RTCSessionDescription alloc]
      initWithType:origSdp.type
@@ -238,7 +223,7 @@ didSetSessionDescriptionWithError:(NSError *)error {
     //          @"%@",
     //          [NSString stringWithFormat:@"Error: %@", error.description]);
     // NSAssert([objects count] > 0, @"Invalid JSON object");
-    
+
     NSString *value = [objects objectForKey:@"type"];
     if ([value compare:@"candidate"] == NSOrderedSame) {
         NSString *mid = [objects objectForKey:@"id"];

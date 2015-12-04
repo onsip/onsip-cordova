@@ -49,7 +49,7 @@ var PhoneRTCMediaHandler = function (session, options) {
     });
   }
 
-  this.initEvents(events);
+  // this.initEvents(events);
 
   this.phonertc = {};
 };
@@ -94,16 +94,16 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
           console.log('Call disconnected!');
         }
       };
-      if (mediaHint && mediaHint.constraints && mediaHint.constraints.video) {
-        callOptions.video = {};
+      if (mediaHint) {
   
         if (mediaHint.render) {
-          var localVideo = mediaHint.render.local && mediaHint.render.local.video;
+          callOptions.video = {};
+          var localVideo = mediaHint.render.local;
           if (localVideo) {
             callOptions.video.localVideo = localVideo;
           }
   
-          var remoteVideo = mediaHint.render.remote && mediaHint.render.remote.video;
+          var remoteVideo = mediaHint.render.remote;
           if (remoteVideo) {
             callOptions.video.remoteVideo = remoteVideo;
           }
@@ -193,12 +193,12 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
       callOptions.video = {};
 
       if (mediaHint.render) {
-        var localVideo = mediaHint.render.local && mediaHint.render.local.video;
+        var localVideo = mediaHint.render.local;
         if (localVideo) {
           callOptions.video.localVideo = localVideo;
         }
 
-        var remoteVideo = mediaHint.render.remote && mediaHint.render.remote.video;
+        var remoteVideo = mediaHint.render.remote;
         if (remoteVideo) {
           callOptions.video.remoteVideo = remoteVideo;
         }

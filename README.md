@@ -7,54 +7,76 @@ SIPjs.com Guide:
 -
 [http://sipjs.com/guides/mobile/cordova/](http://sipjs.com/guides/mobile/cordova/)
 
+Note: this version supports all architectures (x86, arm64, armv7).
+
 Installation
 -
 
-Cordova Setup:
+**Cordova Setup**
 ~~~
 npm install -g cordova ios-deploy
 ~~~
 
-Project Setup:
+**Project Setup**
 ~~~
 cordova create <name>
 cd <name>
 cordova platform add ios
-cordova plugin add https://github.com/onsip/onsip-cordova.git
+cordova plugin add https://github.com/Switch168/onsip-cordova
 cp plugins/com.onsip.cordova/build platforms/ios/cordova/
 cordova run
 ~~~
 
+**XCode Setup**
+
+Add `libc++.dylib` to project Frameworks (General -> Linked Frameworks and Libraries)
+
 Usage
 -
 
-Example:
-~~~
+**Example**
+
+Note: that you need to include an external promise library (i.e. Q `q.min.js`) for this to work with iOS 7. It's not included in this plugin.
+
+```html
 <html>
   <body>
     <video id="localVideo"></video>
     <video id="remoteVideo"></video>
     <input id="target" type="text">
     <button id="makeCall">Make Call</button>
+    <button id="makeVideoCall">Make Video Call</button>
   </body>
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="q.min.js"></script>
   <script>
     document.addEventListener("deviceready", function() {
       var SIP = cordova.require("com.onsip.cordova.Sipjs");
       var PhoneRTCMediaHandler = cordova.require("com.onsip.cordova.SipjsMediaHandler")(SIP);
+
+      // usually gets requires promise library from env
+      // but iOS 7 doesn't include promises in safari so we add our own
+      SIP.Utils.Promise = Q;
+
+      var audioOnlyMediaOptions = {
+        media: {
+          constraints: {
+            audio: true,
+            video: false
+          }
+        }
+      };
       var mediaOptions = {
-        media : {
+        media: {
           constraints: {
             audio: true,
             video: true
           },
           render: {
-            local: {
-              video: document.getElementById('localVideo')
-            },
-            remote: {
-              video: document.getElementById('remoteVideo')
+              // note SIPjs 0.7.0+ syntax
+              local: document.getElementById('localVideo'),
+              remote: document.getElementById('remoteVideo')
             }
           }
         }
@@ -66,6 +88,14 @@ Example:
       });
 
       document.getElementById("makeCall").addEventListener("click", function() {
+        if (window.session) {
+          alert("Only one call at a time.");
+          return;
+        }
+        window.session = window.ua.invite(document.getElementById('target').value, audioOnlyMediaOptions);
+        window.session.on('terminated', function () {window.session = null;});
+      });
+      document.getElementById("makeVideoCall").addEventListener("click", function() {
         if (window.session) {
           alert("Only one call at a time.");
           return;
@@ -82,13 +112,34 @@ Example:
         window.session = _session;
         window.session.accept(mediaOptions);
         window.session.on('terminated', function () {window.session = null;});
-        
+
       });
     });
     app.initialize();
   </script>
 </html>
-~~~
+```
+
+You may also want the video element to auto-refresh its video overlay when you change to landscape from portrait. For example:
+```javascript
+$scope.updateVideoPosition = function () {
+  if (window.cordova.platformId === 'ios') {
+    $rootScope.$broadcast('videoView.updatePosition');
+  }
+}
+
+function updateVideoContainers() {
+  cordova.plugins.phonertc.setVideoViews(
+    {
+      video: {
+        localVideo: document.getElementById('localVideo'),
+        remoteVideo: document.getElementById('remoteVideo')
+      }
+    }
+  );
+}
+$rootScope.$on('videoView.updatePosition', updateVideoContainers);
+```
 
 Authors
 -
@@ -104,10 +155,9 @@ Authors
 * [@joseph-onsip](http://github.com/joseph-onsip)
 
 
-License
--
+**License**
 
-OnSIP-Cordova is released under the [MIT license](https://github.com/onsip/onsip-cordova/license).
+OnSIP-Cordova is released under the [MIT license](https://github.com/onsip/onsip-cordova/blob/master/LICENSE).
 
 OnSIP-Cordova contains SIP.js under the following license:
 

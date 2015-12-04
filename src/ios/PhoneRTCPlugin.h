@@ -10,11 +10,12 @@
 @property(nonatomic, strong) NSString *sendMessageCallbackId;
 @property(nonatomic, strong) RTCEAGLVideoView* localVideoView;
 @property(nonatomic, strong) RTCEAGLVideoView* remoteVideoView;
-@property(nonatomic, strong) RTCVideoTrack* remoteVideoTrack;
+@property(nonatomic, strong) RTCVideoTrack *localVideoTrack, *remoteVideoTrack;
 @property(nonatomic, strong) RTCPeerConnectionFactory* factory;
 - (void)getDescription: (CDVInvokedUrlCommand*)command;
 - (void)setDescription: (CDVInvokedUrlCommand*)command;
 - (void)receiveMessage:(CDVInvokedUrlCommand*)command;
+- (void)setVideoViews: (CDVInvokedUrlCommand*)command;
 @end
 
 @interface MessagesObserver

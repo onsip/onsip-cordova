@@ -24,6 +24,27 @@ exports.setDescription = function (options) {
     [JSON.stringify(options)]);
 };
 
+exports.setVideoViews = function (options) {
+  var execOptions = options || {};
+  if (options.video) {
+    videoElements = {
+      localVideo: options.video.localVideo,
+      remoteVideo: options.video.remoteVideo
+    };
+    execOptions.video = {
+      localVideo: getLayoutParams(videoElements.localVideo),
+      remoteVideo: getLayoutParams(videoElements.remoteVideo)
+    };
+
+    exec(
+      null,
+      null,
+      'PhoneRTCPlugin',
+      'setVideoViews',
+      [JSON.stringify(execOptions)]);
+  }
+};
+
 exports.getDescription = function (options) {
   var execOptions = options || {};
   if (options.video) {
