@@ -28,12 +28,16 @@ cordova run
 ~~~
 
 **XCode Setup**
+
 Add `libc++.dylib` to project Frameworks (General -> Linked Frameworks and Libraries)
 
 Usage
 -
 
 **Example**
+
+Note: that you need to include an external promise library (i.e. Q `q.min.js`) for this to work with iOS 7. It's not included in this plugin.
+
 ```html
 <html>
   <body>
@@ -45,10 +49,16 @@ Usage
   </body>
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="q.min.js"></script>
   <script>
     document.addEventListener("deviceready", function() {
       var SIP = cordova.require("com.onsip.cordova.Sipjs");
       var PhoneRTCMediaHandler = cordova.require("com.onsip.cordova.SipjsMediaHandler")(SIP);
+
+      // usually gets requires promise library from env
+      // but iOS 7 doesn't include promises in safari so we add our own
+      SIP.Utils.Promise = Q;
+
       var audioOnlyMediaOptions = {
         media: {
           constraints: {
