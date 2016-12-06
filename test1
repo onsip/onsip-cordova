@@ -1,0 +1,49 @@
+<html>
+  <body>
+    <video id="localVideo"></video>
+    <video id="remoteVideo"></video>
+    <input id="target" type=text">
+    <button id="makeCall">Make Call</button>
+  </body>
+  <script>
+    document.addEventListener("deviceready", function() {
+      var SIP = cordova.require("com.onsip.cordova.Sip.js");
+      var PhoneRTCMediaHandler = cordova.require("com.onsip.cordova.SipjsMediaHandler")(SIP);
+
+      window.ua = new SIP.UA({
+        mediaHandlerFactory: PhoneRTCMediaHandler
+      });
+
+      document.getElementById("makeCall").addEventListener("click, function() {
+        if (window.session) {
+          alert("Only one call at a time.");
+        }
+        var options = {
+          media : {
+            constraints: {
+              audio: true,
+              video: true
+            },
+            render: {
+              local: {
+                video: document.getElementById('localVideo')
+              },
+              remote: {
+                video: document.getElementById('remoteVideo')
+              }
+            }
+          }
+        }
+
+        if (session) {
+          session.accept(options);
+          window.session = session;
+        } else {
+          window.session = window.ua.invite(document.getElementById('target').value, options);
+        }
+        session.on('terminated', function () {window.session = null;});
+      });
+    });
+    app.initialize();
+  </script>
+</html>
